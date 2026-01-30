@@ -83,7 +83,7 @@ meaning hospital i is matched to student j.
 From the src directory:
 
 ```
-python Gale-Shapely.py ../data/example.in ../data/output.out
+python gale-shapely.py ../data/example.in ../data/output.out
 ```
 
 This runs the hospital-proposing Gale–Shapley algorithm and writes the resulting matching to output.out.
@@ -116,7 +116,7 @@ or a message describing why the matching is invalid or unstable.
 To measure runtime performance for increasing problem sizes:
 
 ```
-python Gale-Shapely.py --bench 512
+python gale-shapely.py --bench 512
 ```
 
 This command:
