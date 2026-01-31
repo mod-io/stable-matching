@@ -1,161 +1,64 @@
-# Algorithm Abstraction Programming Assignment 1
+# Algorithm Abstraction Programming Assignment 1: Stable Matching
 
-## STABLE MATCHING (GALE–SHAPLEY ALGORITHM)
+## Authors
+*   **Name**: Stephen Davis
+*   **UFID**: 63144483
+*   **Name**: Sebastian Robalino
+*   **UFID**: 84159795
 
-This project implements the hospital–student stable matching problem using the hospital-proposing Gale–Shapley algorithm. It also includes a verifier to check whether a proposed matching is valid and stable, and a scalability experiment to measure runtime performance.
+## Compilation and Build Instructions
+This project is implemented in Python 3. No compilation is required.
+You must have Python 3 installed.
+The benchmarking mode (Task C) requires `matplotlib`.
 
----
-
-## AUTHORS
-
-Stephen Davis — UFID: 63144483
-Sebastian Robalino — UFID: 84159795
-
----
-
-## REPOSITORY STRUCTURE
-
-```
-stable-matching/
-│
-├── src/
-│   ├── Gale-Shapely.py          (matching engine + scalability benchmark)
-│   ├── verifier.py             (validity and stability checker)
-│
-├── data/
-│   ├── example.in              (example input instance)
-│   ├── example.out             (one valid matching output)
-│   ├── matcher_runtime.png     (runtime graph for matching algorithm)
-│   ├── verifier_runtime.png    (runtime graph for verifier)
-│
-└── README.md
+To install dependencies:
+```bash
+pip install matplotlib
 ```
 
----
+## Run Instructions
 
-## REQUIREMENTS
-
-Python 3.x
-matplotlib
-
-To install matplotlib:
-
-```
-python -m pip install matplotlib
+### Matcher (Task A)
+To run the Gale-Shapley matching algorithm:
+```bash
+python src/gale-shapely.py [input_file] [output_file]
 ```
 
----
-
-## INPUT FORMAT
-
-The input describes a one-to-one matching market with complete strict rankings.
-
-First line:
-
+**Example:**
+```bash
+python src/gale-shapely.py data/example.in data/output.txt
 ```
-n
-```
+This reads preferences from `data/example.in` and writes the matching to `data/output.txt`.
 
-Next n lines:
-Hospital preference lists
-
-Next n lines:
-Student preference lists
-
-Each preference line is a permutation of the integers 1 through n.
-
----
-
-## OUTPUT FORMAT (MATCHER)
-
-The matcher outputs n lines of the form:
-
-```
-i j
+### Verifier (Task B)
+To run the validity and stability verifier:
+```bash
+python src/verifier.py [input_file] [matching_file]
 ```
 
-meaning hospital i is matched to student j.
-
----
-
-## RUNNING THE MATCHING ALGORITHM (TASK A)
-
-From the src directory:
-
+**Example:**
+```bash
+python src/verifier.py data/example.in data/output.txt
 ```
-python gale-shapely.py ../data/example.in ../data/output.out
-```
+This checks if the matching in `data/output.txt` is valid and stable for the instance in `data/example.in`.
 
-This runs the hospital-proposing Gale–Shapley algorithm and writes the resulting matching to output.out.
+Output will be `VALID STABLE` or an error message explaining why it is invalid or unstable.
 
----
+## Assumptions
+*   Input files follow the format specified in the assignment (n lines of hospital prefs, n lines of student prefs).
+*   Structure of input is strictly integers separated by whitespace.
+*   Libraries: Standard Python libraries (`sys`, `time`, `random`, `collections`) are used for core logic. `matplotlib` is used only for generating graphs.
+*   The system has Python 3 installed.
 
-## RUNNING THE VERIFIER (TASK B)
+## Task C: Scalability
+We measured the running time of the matching engine and the verifier on n = 1, 2, 4, ..., 512.
 
-```
-python verifier.py ../data/example.in ../data/example.out
-```
+### Analysis & Trend
+The Gale-Shapley algorithm theoretically runs in O(n^2). As shown in the graph below, the runtime increases quadratically as n increases. The verifier also exhibits polynomial growth as it must check for blocking pairs.
 
-The verifier checks:
+### Runtime Graphs
+**Matcher Runtime:**
+![Matcher Runtime](matcher_runtime.png)
 
-* Validity (each hospital and student appears exactly once)
-* Stability (no blocking pair exists)
-
-The output will be either:
-
-```
-VALID STABLE
-```
-
-or a message describing why the matching is invalid or unstable.
-
----
-
-## SCALABILITY EXPERIMENT (TASK C)
-
-To measure runtime performance for increasing problem sizes:
-
-```
-python gale-shapely.py --bench 512
-```
-
-This command:
-
-* Generates random preference instances for n = 1, 2, 4, 8, ..., 512
-* Measures the runtime of the matching algorithm
-* Measures the runtime of the verifier
-
-Produces two line graphs:
-
-* matcher_runtime.png
-* verifier_runtime.png
-
----
-
-## OBSERVED TREND (TASK C)
-
-As n increases, the runtime of both the Gale–Shapley matching algorithm and the verifier increases approximately quadratically.
-
-This behavior is expected:
-
-* The hospital-proposing Gale–Shapley algorithm performs at most n² proposals.
-* The verifier checks for blocking pairs using ranking tables, resulting in roughly O(n²) comparisons.
-
-The generated graphs reflect this trend, with runtime increasing significantly as n doubles.
-
----
-
-## ASSUMPTIONS
-
-Input files follow the specified format.
-Preference lists are complete and contain no duplicates.
-Hospitals and students are labeled from 1 to n.
-
----
-
-## HOW TO REPRODUCE RESULTS
-
-Clone the repository
-Install Python dependencies
-Run the matcher, verifier, or benchmark commands listed above
-Verify the output files and generated graphs
+**Verifier Runtime:**
+![Verifier Runtime](verifier_runtime.png)
