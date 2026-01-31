@@ -19,7 +19,7 @@ Sebastian Robalino — UFID: 84159795
 stable-matching/
 │
 ├── src/
-│   ├── Gale-Shapely.py          (matching engine + scalability benchmark)
+│   ├── gale-shapely.py         (matching engine + scalability benchmark)
 │   ├── verifier.py             (validity and stability checker)
 │
 ├── data/
@@ -155,7 +155,7 @@ Hospitals and students are labeled from 1 to n.
 
 ## HOW TO REPRODUCE RESULTS
 
-Clone the repository
-Install Python dependencies
-Run the matcher, verifier, or benchmark commands listed above
-Verify the output files and generated graphs
+* Clone the repository
+* Install Python dependencies
+* Run the matcher, verifier, or benchmark commands listed above
+* Verify the output files and generated graphs
