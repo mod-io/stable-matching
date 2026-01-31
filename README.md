@@ -83,10 +83,10 @@ meaning hospital i is matched to student j.
 From the src directory:
 
 ```
-python gale-shapely.py ../data/example.in ../data/output.out
+python gale-shapely.py ../data/example.in ../data/example.out
 ```
 
-This runs the hospital-proposing Gale–Shapley algorithm and writes the resulting matching to output.out.
+This runs the hospital-proposing Gale–Shapley algorithm and writes the resulting matching to example.out.
 
 ---
 
